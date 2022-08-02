@@ -52,8 +52,6 @@ export default {
 
 <template>
   <div class="home">
-    <h1>{{ message }}</h1>
-
     <div>
       Title:
       <input type="text" v-model="newMovieParams.title" />
@@ -66,10 +64,10 @@ export default {
     </div>
     <button v-on:click="createMovie()">Create Movie</button>
     <div v-for="movie in movies" v-bind:key="movie.id">
-      <h3>{{ movie.name }}</h3>
-      <h3>{{ movie.year }}</h3>
-      <h3>{{ movie.plot }}</h3>
-      <h3>{{ movie.director }}</h3>
+      <h3>Title: {{ movie.title }}</h3>
+      <h4>Year: {{ movie.year }}</h4>
+      <p>Plot: {{ movie.plot }}</p>
+      <p>Director: {{ movie.director }}</p>
       <p><button v-on:click="showMovie(movie)">More Information</button></p>
       <p>_______________________________________________________________________________</p>
     </div>
