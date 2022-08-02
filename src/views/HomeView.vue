@@ -1,13 +1,10 @@
 <script>
 import axios from "axios";
-
 export default {
   data: function () {
     return {
-      message: "Welcome to Sheykly's Movies!",
       movies: [],
       newMovieParams: {},
-
       editMovieParams: {},
     };
   },
@@ -18,32 +15,33 @@ export default {
     indexMovies: function () {
       axios.get("http://localhost:3000/movies.json").then((response) => {
         this.movies = response.data;
-        console.log("All movies", this.movies);
+        console.log("All Movies: ", this.movies);
       });
     },
     createMovie: function () {
       axios
         .post("http://localhost:3000/movies.json", this.newMovieParams)
         .then((response) => {
-          console.log("Movie succesfully created", response.data);
+          console.log("movie created ", response.data);
           this.movies.push(response.data);
+          this.newmovieParams = {};
         })
-        .catch((error) => console.log(error.response));
+        .catch((error) => (this.errorMessage = error));
     },
     showMovie: function (movie) {
       console.log(movie);
+      document.querySelector("#movie-details").showModal();
       this.currentMovie = movie;
       this.editMovieParams = movie;
-      document.querySelector("#movie-details").showModal();
     },
     updateMovie: function (movie) {
       axios.patch("http://localhost:3000/movies/" + movie.id, this.editMovieParams).then((response) => {
-        console.log("Successfully updated movie!", response.data);
+        console.log("We done it!!!", response.data);
       });
     },
     destroyMovie: function (movie) {
       axios.delete("http://localhost:3000/movies/" + movie.id).then((response) => {
-        console.log("Successfully deleted movie!", response.data);
+        console.log("Success!", response.data);
         var index = this.movies.indexOf(movie);
         this.movies.splice(index, 1);
       });
